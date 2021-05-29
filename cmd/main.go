@@ -6,6 +6,27 @@ import (
 )
 
 /**
+- Transposition of intervals to binary visual representation.
+- Returns a map of positional binary "dots" for each musical note.
+**/
+func transposeIntervalsToBinary(majorIntervals []int) map[int]int {
+	intervalMap := make(map[int]int)
+
+	for idx := 0; idx < 12; idx++ {
+		for _, note := range majorIntervals {
+			if idx == note {
+				intervalMap[idx] = 1
+				break
+			} else {
+				intervalMap[idx] = 0
+			}
+		}
+	}
+
+	return intervalMap
+}
+
+/** TODO
 - Provide for enharmonic nomenclature and sheet music/visual mappings
 - Returns mappings of enharmonic equivalencies (e.g. C is B# is Dbb is ...)
 */
@@ -42,8 +63,6 @@ func chromatic() []string {
 	return notes
 }
 
-func transpose(tonic string) string { return tonic }
-
 func majorScale(tonic string, notes []string) []string {
 	fmt.Printf("For the key of : %s", tonic)
 
@@ -61,4 +80,10 @@ func main() {
 
 	newScale := majorScale("C", allNotes)
 	fmt.Printf("\n\n ... You have the transposed scale %v\n", newScale)
+
+	majorIntervals := []int{0, 2, 4, 5, 7, 9, 11}
+	fmt.Println(transposeIntervalsToBinary(majorIntervals))
+
+	minorIntervals := []int{0, 2, 3, 5, 7, 8, 10}
+	fmt.Println(transposeIntervalsToBinary(minorIntervals))
 }
