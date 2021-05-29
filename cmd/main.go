@@ -24,26 +24,41 @@ func enharmonic() map[string]string {
 }
 
 func chromatic() []string {
-	scale := make([]string, 12)
+	notes := make([]string, 12)
 
-	scale[0] = "C"
-	scale[1] = "C#"
-	scale[2] = "D"
-	scale[3] = "D#"
-	scale[4] = "E"
-	scale[5] = "F"
-	scale[6] = "F#"
-	scale[7] = "G"
-	scale[8] = "G#"
-	scale[9] = "A"
-	scale[10] = "A#"
-	scale[11] = "B"
+	notes[0] = "C"
+	notes[1] = "C#"
+	notes[2] = "D"
+	notes[3] = "D#"
+	notes[4] = "E"
+	notes[5] = "F"
+	notes[6] = "F#"
+	notes[7] = "G"
+	notes[8] = "G#"
+	notes[9] = "A"
+	notes[10] = "A#"
+	notes[11] = "B"
 
-	return scale
+	return notes
+}
+
+func transpose(tonic string) string { return tonic }
+
+func majorScale(tonic string, notes []string) []string {
+	fmt.Printf("For the key of : %s", tonic)
+
+	var transposedScale []string
+
+	for _, note := range notes {
+		transposedScale = append(transposedScale, note)
+	}
+
+	return transposedScale
 }
 
 func main() {
-	aScale := chromatic()
-	fmt.Printf("The 12 chromatic notes are: %v\n", aScale)
+	allNotes := chromatic()
 
+	newScale := majorScale("C", allNotes)
+	fmt.Printf("\n\n ... You have the transposed scale %v\n", newScale)
 }
