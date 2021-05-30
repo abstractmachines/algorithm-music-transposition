@@ -20,4 +20,5 @@ The basics of music theory and transposition are:
 - _The circle of fifths represents a circular "ring buffer" or "doubly linked list..."_
 - This may also be done by **memorizing the order of sharps and flats** and iterating each time through those constructs whenever improvisation is required to find the correct key signature.
 
-![Circle of Fifths from Wikipedia](./docs/1200px-Circle_of_fifths_deluxe_4.svg.png)
+> [Wikipedia, Circle of Fifths ![Circle of Fifths from Wikipedia](./docs/1200px-Circle_of_fifths_deluxe_4.svg.png)](https://en.wikipedia.org/wiki/Circle_of_fifths)
+
