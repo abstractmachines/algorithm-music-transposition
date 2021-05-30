@@ -63,27 +63,44 @@ func chromatic() []string {
 	return notes
 }
 
-func majorScale(tonic string, notes []string) []string {
+/**
+- Use Go slices, modulo to emulate a circular ring buffer with wraparound ...
+**/
+func shiftNotes(tonic string, chromatic []string) []string {
 	fmt.Printf("For the key of : %s", tonic)
 
-	var transposedScale []string
+	var shiftedNotes []string
+	var offset int
+	var moduloOffset int
 
-	for _, note := range notes {
-		transposedScale = append(transposedScale, note)
+	for idx, note := range chromatic {
+		if note == tonic {
+			offset = idx
+		}
+
+		firstSlice := chromatic[offset:]
+		shiftedNotes = firstSlice
+
+		moduloOffset = offset % 12
+		wrappedSlice := chromatic[0:moduloOffset]
+		shiftedNotes = append(shiftedNotes, wrappedSlice...)
 	}
 
-	return transposedScale
+	return shiftedNotes
 }
 
 func main() {
 	allNotes := chromatic()
-
-	newScale := majorScale("C", allNotes)
-	fmt.Printf("\n\n ... You have the transposed scale %v\n", newScale)
 
 	majorIntervals := []int{0, 2, 4, 5, 7, 9, 11}
 	fmt.Println(transposeIntervalsToBinary(majorIntervals))
 
 	minorIntervals := []int{0, 2, 3, 5, 7, 8, 10}
 	fmt.Println(transposeIntervalsToBinary(minorIntervals))
+
+	// WIP apply those mappings to the new shifted note system:
+	shiftedNotes := shiftNotes("G", allNotes)
+	fmt.Printf("\n\n ... You have the newly shifted 12 notes of: %v\n", shiftedNotes)
+
+	fmt.Println("\n\n ... The next thing to do is to apply the mapped intervals to the notes\n")
 }
