@@ -1,8 +1,8 @@
 # algorithm-music-transposition
 
-> _music is math in motion. We improvise by determining key and time signatures in real time, using music and math._
+> _"Music is math in motion." We improvise by determining key and time signatures in real time, using music and math._
 
-## The "key signature" / tTransposition" algorithm
+## The "key signature" / transposition" algorithm
 
 This little algorithm uses "bit mapping/masking" theory to create visual representations of musical key signatures, and therefore transpose to any major or minor scale easily, _bypassing "key signatures and memorization" altogether, and instead just using linear mathematical intervals._
 
