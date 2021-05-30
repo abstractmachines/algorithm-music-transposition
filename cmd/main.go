@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	// "strconv"
 )
 
 /**
-- Transposition of intervals to binary visual representation.
+- For any mode or scale, transpose music intervals to binary representation.
 - Returns a map of positional binary "dots" for each musical note.
+- Would maybe be cool? Using bits and bit masks instead of int ranges.
 **/
-func transposeIntervalsToBinary(intervals []int) map[int]int {
+func binaryMusicIntervals(intervals []int) map[int]int {
 	intervalMap := make(map[int]int)
 
 	for idx := 0; idx < 12; idx++ {
@@ -26,8 +26,18 @@ func transposeIntervalsToBinary(intervals []int) map[int]int {
 	return intervalMap
 }
 
+func mapIntervalsToNotes(shiftedNotes []string, intervalMap map[int]int) []string {
+	var finalCut []string
+	for idx, note := range shiftedNotes {
+		if intervalMap[idx] == 1 {
+			finalCut = append(finalCut, note)
+		}
+	}
+	return finalCut
+}
+
 /**
-- Use Go slices, modulo to emulate a circular ring buffer with wraparound ...
+- Shift 12 notes to select from. Emulate ring buffer w/ Go slices, modulo.
 **/
 func shiftNotes(tonic string, chromatic []string) []string {
 	fmt.Printf("For the key of : %s", tonic)
@@ -92,15 +102,16 @@ func enharmonic() map[string]string {
 func main() {
 	allNotes := chromatic()
 
-	majorIntervals := []int{0, 2, 4, 5, 7, 9, 11}
-	fmt.Println(transposeIntervalsToBinary(majorIntervals))
+	ionianIntervals := []int{0, 2, 4, 5, 7, 9, 11}
+	aeolianIntervals := []int{0, 2, 3, 5, 7, 8, 10}
 
-	minorIntervals := []int{0, 2, 3, 5, 7, 8, 10}
-	fmt.Println(transposeIntervalsToBinary(minorIntervals))
+	ionianBinary := binaryMusicIntervals(ionianIntervals)
+	aeolianBinary := binaryMusicIntervals(aeolianIntervals)
 
-	// WIP apply those mappings to the new shifted note system:
 	shiftedNotes := shiftNotes("G", allNotes)
-	fmt.Printf("\n\n ... You have the newly shifted 12 notes of: %v\n", shiftedNotes)
 
-	fmt.Println("\n\n ... The next thing to do is to apply the mapped intervals to the notes\n")
+	keySignatureMajor := mapIntervalsToNotes(shiftedNotes, ionianBinary)
+	keySignatureMinor := mapIntervalsToNotes(shiftedNotes, aeolianBinary)
+	fmt.Printf("\n The major ionian key signature is %v\n", keySignatureMajor)
+	fmt.Printf("\n and the minor aeolian %v\n", keySignatureMinor)
 }
